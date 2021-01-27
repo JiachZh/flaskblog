@@ -1,4 +1,7 @@
 {% extends "layout.html" %} {% block content %} {% for post in posts %}
-<p>"{{ post.title }}"</p>
+
+<h2>
+  <a href="{{ '/post/' + post.url }}">"{{ post.title }}"</a>
+</h2>
 <p>{{ post.content }}</p>
 {% endfor %} {% endblock content %}
