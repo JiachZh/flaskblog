@@ -28,6 +28,9 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
+    def get_id(self):
+        return self.userId
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -37,11 +40,11 @@ class Users(UserMixin, db.Model):
         self.passwordHash = generate_password_hash(password)
 
     def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.passwordHash, password)
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return Users.query.get(int(user_id))
 
 class Categories(db.Model):
     categoryId = db.Column(db.Integer, primary_key=True)
