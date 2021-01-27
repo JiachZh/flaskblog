@@ -1,5 +1,7 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from blog import db
+from flask_login import UserMixin
+from blog import db, login_manager
 
 class Posts(db.Model):
     postId = db.Column(db.Integer, primary_key=True)
@@ -14,14 +16,32 @@ class Posts(db.Model):
     listed = db.Column(db.Integer, nullable=False)
     pinned = db.Column(db.Integer, nullable=False)
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     userId = db.Column(db.Integer, primary_key=True)
     firstName = db.Column(db.String(40), nullable=False)
     lastName = db.Column(db.String(40), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    passwordHash = db.Column(db.String(40), nullable=False)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    passwordHash = db.Column(db.String(128), nullable=False)
     comment = db.relationship('Comments', backref = 'user', lazy=True)
     ratings = db.relationship('Ratings', backref='user', lazy = True)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}')"
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+    
+    @password.setter
+    def password(self, password):
+        self.passwordHash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
 class Categories(db.Model):
     categoryId = db.Column(db.Integer, primary_key=True)

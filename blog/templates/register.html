@@ -1,0 +1,11 @@
+{% extends "layout.html" %} {% block content %}
+<form method="POST" action="">
+  <input type="text" name="firstName" />
+  <input type="text" name="lastName" />
+  <input type="email" name="email" />
+  <input type="password" name="password" />
+  <input type="password" name="confirmpassword" />
+  {{ form.csrf_token }}
+  <input type="submit" value="Register" />
+</form>
+{% endblock content %}
