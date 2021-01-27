@@ -10,3 +10,5 @@ app.config['SECRET_KEY'] = 'AAABBBCCDDDEE'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mysun:3.1415926@138.197.179.225:3306/flaskblog'
 
 db = SQLAlchemy(app)
+
+from blog import routes

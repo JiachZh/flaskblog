@@ -1,7 +1,7 @@
 from datetime import datetime
 from blog import db
 
-class Post(db.Model):
+class Posts(db.Model):
     postId = db.Column(db.Integer, primary_key=True)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.categoryId'), nullable = False, )
     url = db.Column(db.String(40), nullable = False, unique=True)
@@ -31,7 +31,7 @@ class Categories(db.Model):
 class Comments(db.Model):
     CommentId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
-    authorId = db.Column(db.Integer, db.ForeignKey('Users.userId'), nullabale=False)
+    authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
     createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
     hidden = db.Column(db.Integer, nullable=False)
@@ -39,7 +39,7 @@ class Comments(db.Model):
 class Ratings(db.Model):
     RatingId = db.Column(db.Integer, primary_key=True)
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
-    authorId = db.Column(db.Integer, db.ForeignKey('Users.userId'), nullabale=False)
+    authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
     createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
     hidden = db.Column(db.Integer, nullable=False)
