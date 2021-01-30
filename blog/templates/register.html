@@ -1,10 +1,14 @@
 {% extends "layout.html" %} {% block content %}
 <form method="POST" action="">
-  <input type="text" name="firstName" />
-  <input type="text" name="lastName" />
-  <input type="email" name="email" />
-  <input type="password" name="password" />
-  <input type="password" name="confirmpassword" />
+  <input type="text" name="firstName" placeholder="Enter first name" />
+  <input type="text" name="lastName" placeholder="Enter last name" />
+  <input type="email" name="email" placeholder="Enter email" />
+  <input type="password" name="password" placeholder="Enter password" />
+  <input
+    type="password"
+    name="confirmpassword"
+    placeholder="Confirm password"
+  />
   {{ form.csrf_token }}
   <input type="submit" value="Register" />
 </form>
