@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Wonderful Site</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
   </head>
   <body>
     <div id="header">
-        <a href="{{url_for('home')}}">Home</a>&nbsp
-        <a href="{{url_for('about')}}">About Us</a>
+      <a href="{{url_for('home')}}">Home</a>&nbsp
+      <a href="{{url_for('about')}}">About Us</a>
 
-
-    <div id="content">{% block content %} {% endblock %}</div>
+      <div id="content">{% block content %} {% endblock %}</div>
+    </div>
   </body>
 </html>
-
