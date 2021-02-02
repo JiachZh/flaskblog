@@ -11,11 +11,15 @@
     />
   </head>
   <body>
-    <div id="header">
+    <div id="header"></div>
+    <nav id="nav">
       <a href="{{url_for('home')}}">Home</a>&nbsp
       <a href="{{url_for('about')}}">About Us</a>
 
       <div id="content">{% block content %} {% endblock %}</div>
+    </div>
+    <div id="footer">
+      <p>Keep connected:</p>
     </div>
   </body>
 </html>

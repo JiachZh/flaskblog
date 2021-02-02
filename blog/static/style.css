@@ -1,4 +1,19 @@
 html,
 body {
-  background-color: #004643;
+  background-color: #fffffe;
+}
+
+#nav {
+  color: #020826;
+  font-family: "Gill Sans", sans-serif;
+  font-size: 15px;
+  background-color: #716040;
+  text-align: right;
+}
+
+#content {
+  color: #020826;
+  font-family: "Gill Sans", sans-serif;
+  font-size: 15px;
+  background-color: #eaddcf;
 }
