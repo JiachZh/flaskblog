@@ -1,8 +1,17 @@
 {% extends "layout.html" %} {% block content %}
-<form method="POST" action="">
-  <input type="email" name="email" placeholder="Enter email" />
-  <input type="password" name="password" placeholder="Enter password" />
-  {{ form.csrf_token }}
-  <input type="submit" value="Login" />
-</form>
-{% endblock content %}
+<body id="formcontainer">
+  <div class="container">
+    <form id="form" class="form" method="POST" action="">
+      <h2>Sign in</h2>
+      <div class="form-control">
+        <label for="email">Email:</label>
+        <input type="email" name="email" placeholder="Enter email" />
+      </div>
+      <div class="form-control">
+        <label for="password2">Password:</label>
+        <input type="password" name="password" placeholder="Enter password" />
+        <botton type="submit" value="Login">Sign in</botton>
+    </form>
+  </div>
+</body>
+{{ form.csrf_token }}{% endblock content %}
