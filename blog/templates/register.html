@@ -1,15 +1,35 @@
 {% extends "layout.html" %} {% block content %}
-<form method="POST" action="">
-  <input type="text" name="firstName" placeholder="Enter first name" />
-  <input type="text" name="lastName" placeholder="Enter last name" />
-  <input type="email" name="email" placeholder="Enter email" />
-  <input type="password" name="password" placeholder="Enter password" />
-  <input
-    type="password"
-    name="confirmpassword"
-    placeholder="Confirm password"
-  />
-  {{ form.csrf_token }}
-  <input type="submit" value="Register" />
-</form>
+<div class="container">
+  <form id="form" class="form" method="POST" action="">
+    <h2>Register</h2>
+    <div class="form-control">
+      <label for="firstname">Firstname:</label>
+      <input type="text" name="firstName" placeholder="Enter first name" />
+    </div>
+    <div class="form-control">
+      <label for="lastname">Lastname:</label>
+      <input type="text" name="lastName" placeholder="Enter last name" />
+    </div>
+    <div class="form-control">
+      <label for="email">Email:</label>
+      <input type="email" name="email" placeholder="Enter email" />
+    </div>
+    <div class="form-control">
+      <label for="password1">Password:</label>
+      <input type="password" name="password" placeholder="Enter password" />
+    </div>
+    <div class="form-control">
+      <label for="password2">Confirm Password:</label>
+      <input
+        type="password"
+        name="confirmpassword"
+        placeholder="Confirm password"
+      />
+    </div>
+</div>
+
+    {{ form.csrf_token }}
+    <button type="submit" value="Register">Submit</button>
+  </form>
+</div>
 {% endblock content %}
