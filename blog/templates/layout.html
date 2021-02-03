@@ -13,10 +13,11 @@
   </head>
 
   <body>
-    
-   <nav id="navcontainer" >
+    <img id="banner" src="static/img/headerbanner.png" alt="Jcable banner" />
+    <nav id="navcontainer" >
       <a href="{{url_for('home')}}">Home</a>&nbsp
       <a href="{{url_for('about')}}">About Us</a>&nbsp
+    </nav>
 
     <div id="content">{% block content %} {% endblock %}</div>
     </div>

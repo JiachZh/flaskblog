@@ -1,10 +1,13 @@
 html,
 body {
   margin: 0;
+  padding: 0;
   background-color: #fffffe;
   font-family: "Gill Sans", sans-serif;
 }
-
+#banner {
+  width: 100%;
+}
 #navcontainer {
   position: fixed;
   width: 100%;
@@ -68,6 +71,7 @@ h2 {
   color: #777;
   display: block;
   margin-bottom: 5px;
+  text-align: left;
 }
 
 .form-control input {
