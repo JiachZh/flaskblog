@@ -3,20 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Wonderful Site</title>
+    <title>Jcable</title>
+    <link rel="icon" href="data:,">
     <link
       rel="stylesheet"
       type="text/css"
       href="{{ url_for('static',filename='style.css') }}"
     />
   </head>
+
   <body>
-    <div id="header"></div>
-    <nav id="nav">
+    
+   <nav id="navcontainer" >
       <a href="{{url_for('home')}}">Home</a>&nbsp
       <a href="{{url_for('about')}}">About Us</a>
 
-      <div id="content">{% block content %} {% endblock %}</div>
+    <div id="content">{% block content %} {% endblock %}</div>
     </div>
     <div id="footer">
       <p>Keep connected:</p>

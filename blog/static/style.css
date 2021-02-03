@@ -1,19 +1,34 @@
 html,
 body {
+  margin: 0;
   background-color: #fffffe;
+  font-family: "Gill Sans", sans-serif;
 }
 
-#nav {
+#navcontainer {
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+  top: 0;
   color: #020826;
-  font-family: "Gill Sans", sans-serif;
-  font-size: 15px;
+  font-size: 18px;
+  text-align: center;
   background-color: #716040;
-  text-align: right;
+}
+
+#navcontainer a:link,
+visited {
+  text-decoration: none;
+  color: #020826;
+}
+#navcontainer a:hover {
+  color: #020826;
+  background-color: #eaddcf;
+  cursor: pointer;
 }
 
 #content {
   color: #020826;
-  font-family: "Gill Sans", sans-serif;
   font-size: 15px;
   background-color: #eaddcf;
 }
@@ -21,7 +36,6 @@ body {
 /*form*/
 #formcontainer {
   box-sizing: border-box;
-  font-family: "Gill Sans", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
