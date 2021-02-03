@@ -16,12 +16,16 @@
     
    <nav id="navcontainer" >
       <a href="{{url_for('home')}}">Home</a>&nbsp
-      <a href="{{url_for('about')}}">About Us</a>
+      <a href="{{url_for('about')}}">About Us</a>&nbsp
 
     <div id="content">{% block content %} {% endblock %}</div>
     </div>
     <div id="footer">
-      <p>Keep connected:</p>
+      <p>Keep connected:
+        <a href="https://www.linkedin.com"><img src="static/img/linkedin.png" alt="Linkedin"></a>
+        <a href="https://www.facebook.com"><img src="static/img/facebook.png" alt="Facebook"></a>
+        <a href="https://www.instagram.com/"><img src="static/img/instagram.png" alt="Instagram"></a>
+      </p>
     </div>
   </body>
 </html>

@@ -10,16 +10,14 @@ body {
   width: 100%;
   z-index: 99;
   top: 0;
-  color: #020826;
   font-size: 18px;
   text-align: center;
   background-color: #716040;
 }
-
 #navcontainer a:link,
 visited {
   text-decoration: none;
-  color: #020826;
+  color: #fffffe;
 }
 #navcontainer a:hover {
   color: #020826;
@@ -97,4 +95,14 @@ h2 {
   padding: 10px;
   margin-top: 20px;
   width: 100%;
+}
+
+#footer {
+  background-color: #716040;
+  color: #fffffe;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
