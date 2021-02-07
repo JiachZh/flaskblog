@@ -27,8 +27,8 @@ def post(post_url):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if request.method == 'POST':
-        user = Users(firstName=form.firstName.data, lastName=form.lastName.data,email=form.email.data, password=form.password.data)
+    if form.validate_on_submit():
+        user = Users(userName=form.userName.data, firstName=form.firstName.data, lastName=form.lastName.data,email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('home'))
@@ -37,7 +37,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if request.method == 'POST':
+    if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)

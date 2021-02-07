@@ -21,6 +21,7 @@ class Users(UserMixin, db.Model):
     firstName = db.Column(db.String(40), nullable=False)
     lastName = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    userName = db.Column(db.String(40), nullable=False, unique=True)
     passwordHash = db.Column(db.String(128), nullable=False)
     comment = db.relationship('Comments', backref = 'user', lazy=True)
     ratings = db.relationship('Ratings', backref='user', lazy = True)
