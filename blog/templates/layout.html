@@ -17,6 +17,13 @@
     <nav id="navcontainer" >
       <a href="{{url_for('home')}}">Home</a>&nbsp
       <a href="{{url_for('about')}}">About Us</a>&nbsp
+      {% if current_user.is_authenticated %}
+        <span>{{current_user.username}}</span>
+        <a href="{{url_for('logout')}}">Log out</a>
+      {% else %}
+      <a href="{{url_for('login')}}">Login</a>&nbsp
+      <a href="{{url_for('register')}}">Register</a>&nbsp
+      {% endif %}
     </nav>
 
     <div id="content">{% block content %} {% endblock %}</div>

@@ -1,35 +1,33 @@
 {% extends "layout.html" %} {% block content %}
-<body id="formcontainer">
-  <div class="container">
-    <form id="form" class="form" method="POST" action="">
-      <h2>Register</h2>
-      <div class="form-control">
-        <label for="firstname">First Name:</label>
-        <input type="text" name="firstName" placeholder="Enter first name" />
-      </div>
-      <div class="form-control">
-        <label for="lastname">Last Name:</label>
-        <input type="text" name="lastName" placeholder="Enter last name" />
-      </div>
-      <div class="form-control">
-        <label for="email">Email:</label>
-        <input type="email" name="email" placeholder="Enter email" />
-      </div>
-      <div class="form-control">
-        <label for="password1">Password:</label>
-        <input type="password" name="password" placeholder="Enter password" />
-      </div>
-      <div class="form-control">
-        <label for="password2">Confirm Password:</label>
-        <input
-          type="password"
-          name="confirmpassword"
-          placeholder="Confirm password"
-        />
-      </div>
-      <button type="submit" value="Register">Submit</button>
-    </form>
-  </div>
-</body>
+<div class="container">
+  <form id="form" class="form" method="POST" action="">
+    <h2>Register</h2>
+    <div class="form-control">
+      <label for="firstname">First Name:</label>
+      <input type="text" name="firstName" placeholder="Enter first name" />
+    </div>
+    <div class="form-control">
+      <label for="lastname">Last Name:</label>
+      <input type="text" name="lastName" placeholder="Enter last name" />
+    </div>
+    <div class="form-control">
+      <label for="email">Email:</label>
+      <input type="email" name="email" placeholder="Enter email" />
+    </div>
+    <div class="form-control">
+      <label for="password1">Password:</label>
+      <input type="password" name="password" placeholder="Enter password" />
+    </div>
+    <div class="form-control">
+      <label for="password2">Confirm Password:</label>
+      <input
+        type="password"
+        name="confirmpassword"
+        placeholder="Confirm password"
+      />
+    </div>
+    <button type="submit" value="Register">Submit</button>
+  </form>
+</div>
 
 {{ form.csrf_token }} {% endblock content %}
