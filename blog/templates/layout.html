@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jcable</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="data:," />
     <link
       rel="stylesheet"
       type="text/css"
@@ -14,25 +14,40 @@
 
   <body>
     <img id="banner" src="static/img/headerbanner.png" alt="Jcable banner" />
-    <nav id="navcontainer" >
+    <nav id="navcontainer">
       <a href="{{url_for('home')}}">Home</a>&nbsp
-      <a href="{{url_for('about')}}">About Us</a>&nbsp
-      {% if current_user.is_authenticated %}
-        <span>{{current_user.username}}</span>
-        <a href="{{url_for('logout')}}">Log out</a>
+      <a href="{{url_for('about')}}">About Us</a>&nbsp {% if
+      current_user.is_authenticated %}
+      <span>{{current_user.username}}</span>
+      <a href="{{url_for('logout')}}">Log out</a>
       {% else %}
       <a href="{{url_for('login')}}">Login</a>&nbsp
-      <a href="{{url_for('register')}}">Register</a>&nbsp
-      {% endif %}
+      <a href="{{url_for('register')}}">Register</a>&nbsp {% endif %}
     </nav>
 
     <div id="content">{% block content %} {% endblock %}</div>
+
+    <div>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
     </div>
     <div id="footer">
-      <p>Keep connected:
-        <a href="https://www.linkedin.com"><img src="static/img/linkedin.png" alt="Linkedin"></a>
-        <a href="https://www.facebook.com"><img src="static/img/facebook.png" alt="Facebook"></a>
-        <a href="https://www.instagram.com/"><img src="static/img/instagram.png" alt="Instagram"></a>
+      <p>
+        Keep connected:
+        <a href="https://www.linkedin.com"
+          ><img src="static/img/linkedin.png" alt="Linkedin"
+        /></a>
+        <a href="https://www.facebook.com"
+          ><img src="static/img/facebook.png" alt="Facebook"
+        /></a>
+        <a href="https://www.instagram.com/"
+          ><img src="static/img/instagram.png" alt="Instagram"
+        /></a>
       </p>
     </div>
   </body>

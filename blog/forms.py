@@ -1,13 +1,15 @@
+from flask import flash
 from flask_wtf import FlaskForm
 from blog.models import Users
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, validators, SubmitField
 from wtforms.validators import DataRequired, Length, Email, ValidationError, Regexp
 
 
 class RegistrationForm(FlaskForm):
     userName = StringField('Username', validators=[DataRequired(), Length(min=3, max=15)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(),Regexp('^(?=.*\d).{8,15}$', message='Your password should be between 8 and 15 characters long, and contains at least one numeric digit.')])  
+    password = PasswordField('Password', validators=[DataRequired(),Regexp('^(?=.*\d).{8,15}$', message='Your password should be between 8 and 15 characters long, and contains at least one numeric digit.'), validators.EqualTo('password2', message='Passwords must match')]) 
+    password2 = PasswordField('Repeat Password', validators=[DataRequired()])
     submit=SubmitField('Register')
 
     def validate_username(self, username):
@@ -28,4 +30,4 @@ class LoginForm(FlaskForm):
     def validate_email(self, email):
         user = Users.query.filter_by(email=email.data).first()
         if not user:
-            raise ValidationError('User not found or wrong password')
+            flash('User not exist or password wrong.')

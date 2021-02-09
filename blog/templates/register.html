@@ -11,11 +11,15 @@
       <input type="text" name="lastName" placeholder="Enter last name" />
     </div>
     <div class="form-control">
+      <label for="username">Username:</label>
+      <input type="text" name="userName" placeholder="Enter username" />
+    </div>
+    <div class="form-control">
       <label for="email">Email:</label>
       <input type="email" name="email" placeholder="Enter email" />
     </div>
     <div class="form-control">
-      <label for="password1">Password:</label>
+      <label for="password">Password:</label>
       <input type="password" name="password" placeholder="Enter password" />
     </div>
     <div class="form-control">
@@ -23,11 +27,23 @@
       <input
         type="password"
         name="confirmpassword"
-        placeholder="Confirm password"
+        placeholder="Repeat password"
       />
     </div>
     <button type="submit" value="Register">Submit</button>
   </form>
-</div>
 
-{{ form.csrf_token }} {% endblock content %}
+  <div id='"error'>
+    {% for error in form.userName.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %} {% for error in form.email.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %} {% for error in form.password.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %} {% for error in form.password2.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </div>
+
+  {{ form.csrf_token }} {% endblock content %}
+</div>

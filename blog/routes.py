@@ -1,5 +1,5 @@
 
-from flask import render_template, url_for, abort, request, redirect
+from flask import render_template, url_for, abort, request, redirect, flash
 from blog import app, db
 from blog.models import Categories, Posts, Comments, Ratings, Users
 from blog.forms import RegistrationForm, LoginForm
@@ -28,7 +28,7 @@ def post(post_url):
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = Users(userName=form.userName.data, firstName=form.firstName.data, lastName=form.lastName.data,email=form.email.data, password=form.password.data)
+        user = Users(userName=form.userName.data, firstName=form.firstName.data, lastName=form.lastName.data,email=form.email.data, password=form.password.data, password2=form.password.data)
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('home'))
@@ -42,6 +42,8 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             return redirect(url_for('home'))
+        else:
+            flash('Invalid email address or password.')
     return render_template('login.html', title='Login', form=form)
 
 @app.route("/logout")
