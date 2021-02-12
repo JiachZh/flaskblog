@@ -16,7 +16,8 @@
     <img id="banner" src="static/img/headerbanner.png" alt="Jcable banner" />
     <nav id="navcontainer">
       <a href="{{url_for('home')}}">Home</a>&nbsp
-      <a href="{{url_for('about')}}">About Us</a>&nbsp {% if
+      <a href="{{url_for('about')}}">About Us</a>&nbsp
+      <a href="{{url_for('allposts')}}">All Posts</a>&nbsp {% if
       current_user.is_authenticated %}
       <span class="greeting">Hello,{{current_user.username}}</span>
       <a href="{{url_for('logout')}}">Log out</a>

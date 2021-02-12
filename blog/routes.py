@@ -17,6 +17,10 @@ def home():
 def about():
     return render_template('about.html', title='About Us')
 
+@app.route('/allposts', methods=['GET'])
+def allposts():
+    return render_template('allposts.html', title='All posts')
+
 @app.route('/post/<string:post_url>')
 def post(post_url):
     post = Posts.query.filter_by(url=post_url).first()
