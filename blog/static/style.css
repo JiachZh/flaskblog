@@ -13,9 +13,10 @@ body {
   width: 100%;
   z-index: 99;
   top: 0;
+  padding: 8px;
   font-size: 18px;
   text-align: center;
-  background-color: #716040;
+  background-color: #f7c049;
 }
 #navcontainer a:link,
 visited {
@@ -23,15 +24,17 @@ visited {
   color: #fffffe;
 }
 #navcontainer a:hover {
-  color: #020826;
-  background-color: #eaddcf;
+  color: #fffffe;
   cursor: pointer;
+}
+
+.greeting {
+  color: whitesmoke;
 }
 
 #content {
   color: #020826;
   font-size: 15px;
-  background-color: #eaddcf;
 }
 
 /*form*/

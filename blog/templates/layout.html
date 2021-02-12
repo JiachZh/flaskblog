@@ -18,9 +18,10 @@
       <a href="{{url_for('home')}}">Home</a>&nbsp
       <a href="{{url_for('about')}}">About Us</a>&nbsp {% if
       current_user.is_authenticated %}
-      <span>{{current_user.username}}</span>
+      <span class="greeting">Hello,{{current_user.username}}</span>
       <a href="{{url_for('logout')}}">Log out</a>
       {% else %}
+      <span class="greeting">Hello, Guest</span>
       <a href="{{url_for('login')}}">Login</a>&nbsp
       <a href="{{url_for('register')}}">Register</a>&nbsp {% endif %}
     </nav>

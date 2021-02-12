@@ -2,7 +2,7 @@ from flask import flash
 from flask_wtf import FlaskForm
 from blog.models import Users
 from wtforms import StringField, PasswordField, validators, SubmitField
-from wtforms.validators import DataRequired, Length, Email, ValidationError, Regexp
+from wtforms.validators import DataRequired, InputRequired, Length, Email, ValidationError, Regexp
 
 
 class RegistrationForm(FlaskForm):
@@ -31,3 +31,7 @@ class LoginForm(FlaskForm):
         user = Users.query.filter_by(email=email.data).first()
         if not user:
             flash('User not exist or password wrong.')
+        
+class CommentForm(FlaskForm):
+    comment = StringField('Comment', validators=[InputRequired()])
+    submit = SubmitField('Post comment')
