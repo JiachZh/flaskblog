@@ -7,6 +7,8 @@ from wtforms.validators import DataRequired, InputRequired, Length, Email, Valid
 
 class RegistrationForm(FlaskForm):
     userName = StringField('Username', validators=[DataRequired(), Length(min=3, max=15)])
+    firstName = StringField('Firstname', validators=[DataRequired(), Length(min=3, max=15)])
+    lastName = StringField('Lastname', validators=[DataRequired(), Length(min=3, max=15)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(),Regexp('^(?=.*\d).{8,15}$', message='Your password should be between 8 and 15 characters long, and contains at least one numeric digit.'), validators.EqualTo('password2', message='Passwords must match')]) 
     password2 = PasswordField('Repeat Password', validators=[DataRequired()])
