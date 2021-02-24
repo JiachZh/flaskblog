@@ -1,7 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
 <h2>All blog posts</h2>
-{% for post in posts %}
-<h3><a href="{{ '/post/' + post.url }}">{{ post.title }}</a></h3>
-{% endfor %}
+
+<p>
+  <button type="button" class="btn btn-outline-secondary">Newest first</button>
+  <button type="button" class="btn btn-outline-secondary">Oldest first</button>
+</p>
+
+<table class="table">
+  <tbody>
+    {% for post in posts %}
+    <tr>
+      <td>
+        <em><a href="{{ '/post/' + post[0].url }}">{{ post[0].title }}</a></em>
+      </td>
+      <td>
+        {{ post[0].createdAt }}
+      </td>
+      <td>
+        {{ post[0].comments | length }} comment(s)
+      </td>
+      <td>
+        {% if post.avg_rating %}{{ "%.1f" | format(post.avg_rating) }}{% else %}-{% endif %}/10
+      </td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
 {% endblock content %}

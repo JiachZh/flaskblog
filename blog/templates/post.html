@@ -1,18 +1,29 @@
 {% extends "layout.html" %} {% block content %}
-<img src="{{ post.image }}" />
-<h1>{{ post.title }}</h1>
+<img class="img-fluid rounded mx-auto d-block" src="{{ post.image }}">
+<h1 class="display-4 text-center">{{ post.title }}</h1>
 <p>{{ post.content }}</p>
 <p class="text-right">Written at {{ post.createdAt }} {% if post.updatedAt %}(last edited at {{ post.updatedAt }}){% endif %}</p>
 
+<p>{{ post.rating }}</p>
+
+<h3><small><small><span class="oi oi-comment-square" title="Comments" aria-hidden="true"></span></small></small> Comments</h3>
 {% for comment in comments %}
 {% if not comment.hidden %}
-<div class="row">
-  <div class="col-1">
-    <img class="img-fluid rounded float-right" src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?d=monsterid" />
-  </div>
-  <div class="col-11">
-    <h6><strong>@{{ comment.user.userName }}</strong> ({{ comment.user.firstName }} {{comment.user.lastName }}) <small>wrote at {{ comment.createdAt }} {% if comment.updatedAt %}(last edited at {{ comment.updatedAt }}){% endif %}</small></h6>
-    <p>{{ comment.content }}</p>
+<div class="card" data="{{ comment.commentId }}">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2">
+        <img class="img-fluid rounded float-right" src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?d=monsterid" />
+      </div>
+      <div class="col-10">
+        <h6><small><a href="#comment-{{ comment.commentId }}" id="#comment-{{ comment.commentId }}"><span class="oi oi-link-intact" title="Anchor" aria-hidden="true"></span></a></small> <strong>@{{ comment.user.userName }}</strong> ({{ comment.user.firstName }} {{comment.user.lastName }}) <small>wrote at {{ comment.createdAt }} {% if comment.updatedAt %}(last edited at {{ comment.updatedAt }}){% endif %}</small></h6>
+        <p>{{ comment.content }}</p>
+        <a href="#" class="card-link" data="{{ comment.commentId }}">Cite</a>
+        {% if comment.authorId == current_user.userId %}
+        <a href="#" class="card-link" data="{{ comment.commentId }}">Edit</a>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endif %}

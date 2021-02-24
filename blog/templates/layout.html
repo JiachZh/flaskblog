@@ -12,12 +12,17 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='bricklayer/bricklayer.css') }}"
       />
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static', filename='/open-iconic/css/open-iconic-bootstrap.css') }}"
+      href="{{ url_for('static', filename='open-iconic/css/open-iconic-bootstrap.css') }}"
+      />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
       />
   </head>
 
@@ -57,7 +62,8 @@
         </div>
     </nav>
 
-    <img id="banner" src="{{ url_for('static', filename='img/headerbanner.png') }}" alt="Jcable banner" />
+    <img id="banner" class="img-fluid" src="{{ url_for('static', filename='img/headerbanner.png') }}" alt="Jcable banner" />
+    <hr>
     <div class="container" id="content">
       <div>
         {% with messages = get_flashed_messages() %}
@@ -71,10 +77,10 @@
         {% endwith %}
       </div>
       <div class="row">
-        <div class="col-md-8 col-sm-12">
+        <div class="col-lg-9 col-md-12">
           {% block content %} {% endblock %}
         </div>
-        <div class="col-md-4 col-sm-12">
+        <div class="col-lg-3 col-md-12">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Search</h5>
@@ -82,7 +88,7 @@
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" placeholder="Search posts by keywords" aria-label="Search posts by keywords" aria-describedby="basic-addon2">
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"><span class="oi oi-zoom-in" title="Search" aria-hidden="true"></span> Search</button>
+                    <button class="btn btn-outline-secondary" type="button"><span class="oi oi-zoom-in" title="Search" aria-hidden="true"></span></button>
                   </div>
                 </div>
               </form>
@@ -93,7 +99,7 @@
               <h5 class="card-title">Recent comments</h5>
               <h6 class="card-subtitle mb-2 text-muted">Join the discussion! </h6>
               {% for comment in recent_comments %}
-              <p><strong>{{ comment.user.firstName }} {{comment.user.lastName}}</strong> just wrote under <a href="/post/{{ comment.post.url }}#{{ comment.commentId }}"><em>{{ comment.post.title | truncate(20, False, '...') }}</em></a>: {{ comment.content | truncate(40, False, '...')}}</p>
+              <p><strong>{{ comment.user.firstName }} {{comment.user.lastName}}</strong> just wrote under <a href="/post/{{ comment.post.url }}#comment-{{ comment.commentId }}"><em>{{ comment.post.title | truncate(20, False, '...') }}</em></a>: {{ comment.content | truncate(40, False, '...')}}</p>
               {% endfor %}
             </div>
           </div>
@@ -114,6 +120,8 @@
         </p>
       </div>
       <script src="{{ url_for('static', filename='jquery-3.2.1.slim.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='bricklayer/bricklayer.min.js') }}"></script>
       <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.js') }}"></script>
+      <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>

@@ -15,8 +15,8 @@ class Posts(db.Model):
     hidden = db.Column(db.Integer, nullable=False, default=0)
     listed = db.Column(db.Integer, nullable=False, default=0)
     pinned = db.Column(db.Integer, nullable=False, default=0)
-    comment = db.relationship('Comments', backref='post', lazy=True)
-    ratings = db.relationship('Ratings', backref='post', lazy = True)
+    comments = db.relationship('Comments', backref='post', lazy=True)
+    ratings = db.relationship('Ratings', backref='post', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.createdAt}', '{self.url}', '{self.title}')"
@@ -29,7 +29,7 @@ class Users(UserMixin, db.Model):
     userName = db.Column(db.String(40), nullable=False, unique=True)
     passwordHash = db.Column(db.String(128), nullable=False)
     comment = db.relationship('Comments', backref='user', lazy=True)
-    ratings = db.relationship('Ratings', backref='user', lazy = True)
+    ratings = db.relationship('Ratings', backref='user', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
@@ -56,6 +56,7 @@ class Categories(db.Model):
     categoryId = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
+    post = db.relationship('Posts', backref='post', lazy=True)
 
 class Comments(db.Model):
     commentId = db.Column(db.Integer, primary_key=True)

@@ -1,7 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for post in posts %}
-<h2><a href="{{ '/post/' + post.url }}">{{ post.title }}</a></h2>
-<p>{{ post.content }}</p>
-{% endfor %}
+<div class="bricklayer">
+  {% for post in posts %}
+  <a href="{{ '/post/' + post[0].url }}">
+    <div class="card box">
+      <img class="card-img-top" src="{{ post[0].image }}" alt="{{ post[0].title }}">
+      <div class="card-body">
+        <h5 class="card-title">
+          {% if post[0].pinned %}<small><span class="oi oi-pin text-danger" title="Pinned" aria-hidden="true"></span> </small>{% endif %}{{ post[0].title | truncate(20, True, '...')}}
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ post[0].createdAt }}</h6>
+        <p class="card-text text-muted">{{ post[0].content | truncate(100, False, '...')}}</p>
+        <p class="card-text"><small class="text-muted">{% if post.avg_rating %}{{ "%.1f" | format(post.avg_rating) }}{% else %}-{% endif %}/10, {{ post[0].comments | length }} comment(s)</small></p>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+<a href="{{url_for('allposts')}}" class="btn btn-outline-secondary btn-block">All posts</a>
 {% endblock content %}

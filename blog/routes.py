@@ -8,7 +8,7 @@ from sqlalchemy.sql import func
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Posts.query.all()
+    posts = Posts.query.add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).limit(12).all()
     return render_template('home.html', title='Home', posts=posts)
 
 @app.route('/about')
@@ -17,7 +17,8 @@ def about():
 
 @app.route('/allposts', methods=['GET'])
 def allposts():
-    posts = Posts.query.all()
+    posts = Posts.query.add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).all()
+    print(posts)
     return render_template('allposts.html', title='All posts', posts=posts)
 
 @app.route('/post/<string:post_url>')
@@ -26,8 +27,9 @@ def post(post_url):
     if post is None:
         abort(404)
     comments = Comments.query.filter_by(postId=post.postId).join(Users)
-    ratings = Ratings.query.filter_by(postId=post.postId).with_entities(func.avg(Ratings.content).label('average'))
-    return render_template('post.html', title=post.title, post=post, comments=comments, ratings=ratings)
+    rating = Ratings.query.filter_by(postId=post.postId).with_entities(func.avg(Ratings.content).label('average'))
+    print(rating)
+    return render_template('post.html', title=post.title, post=post, comments=comments, rating=rating)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
