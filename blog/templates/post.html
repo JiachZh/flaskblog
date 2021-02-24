@@ -1,5 +1,20 @@
 {% extends "layout.html" %} {% block content %}
 <img src="{{ post.image }}" />
-<h1>"{{ post.title }}"</h1>
+<h1>{{ post.title }}</h1>
 <p>{{ post.content }}</p>
+<p class="text-right">Written at {{ post.createdAt }} {% if post.updatedAt %}(last edited at {{ post.updatedAt }}){% endif %}</p>
+
+{% for comment in comments %}
+{% if not comment.hidden %}
+<div class="row">
+  <div class="col-1">
+    <img class="img-fluid rounded float-right" src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?d=monsterid" />
+  </div>
+  <div class="col-11">
+    <h6><strong>@{{ comment.user.userName }}</strong> ({{ comment.user.firstName }} {{comment.user.lastName }}) <small>wrote at {{ comment.createdAt }} {% if comment.updatedAt %}(last edited at {{ comment.updatedAt }}){% endif %}</small></h6>
+    <p>{{ comment.content }}</p>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
 {% endblock content %}

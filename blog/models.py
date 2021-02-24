@@ -10,11 +10,16 @@ class Posts(db.Model):
     title = db.Column(db.Text, nullable = False)
     content = db.Column(db.Text, nullable = False)
     image = db.Column(db.String(80), nullable=False, default='/static/img/defaultPostImage.jpg')
-    createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
-    hidden = db.Column(db.Integer, nullable=False)
-    listed = db.Column(db.Integer, nullable=False)
-    pinned = db.Column(db.Integer, nullable=False)
+    hidden = db.Column(db.Integer, nullable=False, default=0)
+    listed = db.Column(db.Integer, nullable=False, default=0)
+    pinned = db.Column(db.Integer, nullable=False, default=0)
+    comment = db.relationship('Comments', backref='post', lazy=True)
+    ratings = db.relationship('Ratings', backref='post', lazy = True)
+
+    def __repr__(self):
+        return f"Post('{self.createdAt}', '{self.url}', '{self.title}')"
 
 class Users(UserMixin, db.Model):
     userId = db.Column(db.Integer, primary_key=True)
@@ -23,7 +28,7 @@ class Users(UserMixin, db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     userName = db.Column(db.String(40), nullable=False, unique=True)
     passwordHash = db.Column(db.String(128), nullable=False)
-    comment = db.relationship('Comments', backref = 'user', lazy=True)
+    comment = db.relationship('Comments', backref='user', lazy=True)
     ratings = db.relationship('Ratings', backref='user', lazy = True)
 
     def __repr__(self):
@@ -53,17 +58,25 @@ class Categories(db.Model):
     content = db.Column(db.Text, nullable=False)
 
 class Comments(db.Model):
-    CommentId = db.Column(db.Integer, primary_key=True)
+    commentId = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
     authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
-    createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
-    hidden = db.Column(db.Integer, nullable=False)
+    hidden = db.Column(db.Integer, nullable=False, default=0)
+
+    def __repr__(self):
+        return f"Comment('{self.createdAt}', '{self.authorId}', '{self.content}')"
 
 class Ratings(db.Model):
-    RatingId = db.Column(db.Integer, primary_key=True)
+    ratingId = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Integer, nullable=False)
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
     authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
     createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
-    hidden = db.Column(db.Integer, nullable=False)
+    hidden = db.Column(db.Integer, nullable=False, default=0)
+
+    def __repr__(self):
+        return f"Rating('{self.createdAt}', '{self.authorId}', '{self.content}')"

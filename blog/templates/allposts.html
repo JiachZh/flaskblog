@@ -1,2 +1,7 @@
-{% extends "layout.html" %} {% block content %} All blog posts{% endblock
-content %}
+{% extends "layout.html" %}
+{% block content %}
+<h2>All blog posts</h2>
+{% for post in posts %}
+<h3><a href="{{ '/post/' + post.url }}">{{ post.title }}</a></h3>
+{% endfor %}
+{% endblock content %}

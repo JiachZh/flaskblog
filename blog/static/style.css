@@ -1,115 +1,55 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #fffffe;
-  font-family: "Gill Sans", sans-serif;
+    margin: 0;
+    background-color: #fffffe;
+    font-family: "Gill Sans", sans-serif;
 }
+
+body {
+    padding: 0 0 55px 0;
+}
+
 #banner {
-  width: 100%;
+    width: 100%;
 }
+
 #navcontainer {
-  position: fixed;
-  width: 100%;
-  z-index: 99;
-  top: 0;
-  padding: 8px;
-  font-size: 18px;
-  text-align: center;
-  background-color: #f7c049;
-}
-#navcontainer a:link,
-visited {
-  text-decoration: none;
-  color: #fffffe;
-}
-#navcontainer a:hover {
-  color: #fffffe;
-  cursor: pointer;
+    background-color: #f7c049;
 }
 
 .greeting {
-  color: whitesmoke;
+    color: whitesmoke;
 }
 
 #content {
-  color: #020826;
-  font-size: 15px;
-}
-
-/*form*/
-#container {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  margin: 0;
-}
-.container {
-  background-color: #fffffe;
-  align-items: center;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  width: 400px;
+    color: #020826;
+    font-size: 15px;
 }
 
 h2 {
-  text-align: center;
-  margin: 0 0 20px;
-  color: #716040;
+    text-align: center;
+    margin: 0 0 20px;
+    color: #716040;
 }
 
-.form {
-  padding: 30px 40px;
-  background-color: #fffffe;
-}
-
-.form-control {
-  margin-bottom: 10px;
-  padding-bottom: 20px;
-  position: relative;
-}
-
-.form-control label {
-  color: #777;
-  display: block;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-.form-control input {
-  border: 2px solid #f0f0f0;
-  border-radius: 4px;
-  display: block;
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.form-control input:focus {
-  outline: 0;
-  border-color: #777;
+.form .invalid-feedback {
+    display: block;
 }
 
 .form button {
-  cursor: pointer;
-  background-color: #716040;
-  border: 2px solid #716040;
-  border-radius: 4px;
-  color: #fff;
-  display: block;
-  font-size: 16px;
-  padding: 10px;
-  margin-top: 20px;
-  width: 100%;
+    background-color: #716040;
+    border: 1px solid #615030;
+    color: #FFF;
 }
 
 #footer {
-  background-color: #716040;
-  color: #fffffe;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+    background-color: #716040;
+    color: #fffffe;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 15px;
+    text-align: center;
 }
+

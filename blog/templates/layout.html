@@ -8,49 +8,98 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{{ url_for('static',filename='style.css') }}"
-    />
+      href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"
+      />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+      />
   </head>
 
   <body>
-    <img id="banner" src="static/img/headerbanner.png" alt="Jcable banner" />
-    <nav id="navcontainer">
-      <a href="{{url_for('home')}}">Home</a>&nbsp
-      <a href="{{url_for('about')}}">About Us</a>&nbsp
-      <a href="{{url_for('allposts')}}">All Posts</a>&nbsp {% if
-      current_user.is_authenticated %}
-      <span class="greeting">Hello,{{current_user.username}}</span>
-      <a href="{{url_for('logout')}}">Log out</a>
-      {% else %}
-      <span class="greeting">Hello, Guest</span>
-      <a href="{{url_for('login')}}">Login</a>&nbsp
-      <a href="{{url_for('register')}}">Register</a>&nbsp {% endif %}
+    <nav class="navbar navbar-expand-md navbar-light" id="navcontainer">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-collapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item{% if request.endpoint=='home' %} active{% endif %}">
+              <a class="nav-link" href="{{url_for('home')}}">Home</a>
+            </li>
+            <li class="nav-item{% if request.endpoint=='about' %} active{% endif %}">
+              <a class="nav-link" href="{{url_for('about')}}">About Us</a>
+            </li>
+            <li class="nav-item{% if request.endpoint=='allposts' %} active{% endif %}">
+              <a class="nav-link" href="{{url_for('allposts')}}">All Posts</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            {% if current_user.is_authenticated %}
+            <span class="greeting navbar-text">Hello, <a href="{{url_for('profile')}}">{{ current_user.firstName }}</a></span>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('logout')}}">Log out</a>
+            </li>
+            {% else %}
+            <span class="greeting navbar-text">Hello, Guest! </span>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('login')}}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('register')}}">Register</a>
+            </li>
+            {% endif %}
+        </div>
     </nav>
 
-    <div id="content">{% block content %} {% endblock %}</div>
-
-    <div>
-      {% with messages = get_flashed_messages() %} {% if messages %}
-      <ul class="flashes">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% endwith %}
-    </div>
-    <div id="footer">
-      <p>
-        Keep connected:
-        <a href="https://www.linkedin.com"
-          ><img src="static/img/linkedin.png" alt="Linkedin"
-        /></a>
-        <a href="https://www.facebook.com"
-          ><img src="static/img/facebook.png" alt="Facebook"
-        /></a>
-        <a href="https://www.instagram.com/"
-          ><img src="static/img/instagram.png" alt="Instagram"
-        /></a>
-      </p>
-    </div>
+    <img id="banner" src="{{ url_for('static', filename='img/headerbanner.png') }}" alt="Jcable banner" />
+    <div class="container" id="content">
+      <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flashes">
+          {% for message in messages %}
+          <div class="alert alert-info" role="alert">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-sm-12">
+          {% block content %} {% endblock %}
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              search
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              {% for comment in recent_comments %}
+              <strong>{{ comment.user.firstName }}</strong> just wrote under <a href="/post/{{ comment.post.url }}#{{ comment.commentId }}"><em>{{ comment.post.title | truncate(20, False, '...') }}</em></a>: {{ comment.content | truncate(20, False, '...')}}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer">
+        <p>
+          Keep connected:
+          <a href="https://www.linkedin.com">
+            <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="Linkedin"/>
+          </a>
+          <a href="https://www.facebook.com">
+            <img src="{{ url_for('static', filename='img/facebook.png') }}" alt="Facebook"/>
+          </a>
+          <a href="https://www.instagram.com">
+            <img src="{{ url_for('static', filename='img/instagram.png') }}" alt="Instagram"/>
+          </a>
+        </p>
+      </div>
+      <script src="{{ url_for('static', filename='jquery-3.2.1.slim.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.js') }}"></script>
   </body>
 </html>
