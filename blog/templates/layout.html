@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jcable</title>
-    <link rel="icon" href="data:," />
     <link
       rel="stylesheet"
       type="text/css"
@@ -14,6 +13,11 @@
       rel="stylesheet"
       type="text/css"
       href="{{ url_for('static', filename='style.css') }}"
+      />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='/open-iconic/css/open-iconic-bootstrap.css') }}"
       />
   </head>
 
@@ -73,13 +77,23 @@
         <div class="col-md-4 col-sm-12">
           <div class="card">
             <div class="card-body">
-              search
+              <h5 class="card-title">Search</h5>
+              <form>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Search posts by keywords" aria-label="Search posts by keywords" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><span class="oi oi-zoom-in" title="Search" aria-hidden="true"></span> Search</button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
           <div class="card">
             <div class="card-body">
+              <h5 class="card-title">Recent comments</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Join the discussion! </h6>
               {% for comment in recent_comments %}
-              <strong>{{ comment.user.firstName }}</strong> just wrote under <a href="/post/{{ comment.post.url }}#{{ comment.commentId }}"><em>{{ comment.post.title | truncate(20, False, '...') }}</em></a>: {{ comment.content | truncate(20, False, '...')}}
+              <p><strong>{{ comment.user.firstName }} {{comment.user.lastName}}</strong> just wrote under <a href="/post/{{ comment.post.url }}#{{ comment.commentId }}"><em>{{ comment.post.title | truncate(20, False, '...') }}</em></a>: {{ comment.content | truncate(40, False, '...')}}</p>
               {% endfor %}
             </div>
           </div>
@@ -87,7 +101,7 @@
       </div>
       <div id="footer">
         <p>
-          Keep connected:
+          <span class="oi oi-audio-spectrum" title="Follow me" aria-hidden="true"></span> Keep connected:
           <a href="https://www.linkedin.com">
             <img src="{{ url_for('static', filename='img/linkedin.png') }}" alt="Linkedin"/>
           </a>
