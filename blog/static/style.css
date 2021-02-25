@@ -65,3 +65,29 @@ h2 {
 .card {
     margin: 1rem auto;
 }
+
+a.disabled {
+    pointer-events: none;
+    cursor: text;
+    color: #777;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    html {
+	scroll-behavior: auto;
+    }
+}
+
+.is-starred {
+    color: #f5c61b;
+    cursor: pointer;
+}
+
+.is-not-starred {
+    color: rgb(170, 170, 170);
+    cursor: pointer;
+}

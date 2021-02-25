@@ -1,31 +1,88 @@
 {% extends "layout.html" %} {% block content %}
 <img class="img-fluid rounded mx-auto d-block" src="{{ post.image }}">
 <h1 class="display-4 text-center">{{ post.title }}</h1>
-<p>{{ post.content }}</p>
+<p>{{ post.content | safe }}</p>
 <p class="text-right">Written at {{ post.createdAt }} {% if post.updatedAt %}(last edited at {{ post.updatedAt }}){% endif %}</p>
 
-<p>{{ post.rating }}</p>
+<hr>
+
+<div>
+  Average rating from all readers:
+  {% if rating[0] %}
+  <div style="display: inline; background: linear-gradient(to right, #f5c61b 0%, #fdca15 {{ rating[0] * 10 }}%, rgb(154 154 154) {{ rating[0] * 10 + 1}}%, rgb(170,170,170) 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">🟊🟊🟊🟊🟊🟊🟊🟊🟊🟊</div>
+  {% else %}
+  <div style="display: inline; background: linear-gradient(to right, #f5c61b 0%, #fdca15 0.0000%, rgb(154 154 154) 0.0001%, rgb(170,170,170) 100%); background-clip: text; -webkit-background-clip: text; color: transparent;">🟊🟊🟊🟊🟊🟊🟊🟊🟊🟊</div>
+  {% endif %}.
+</div>
+<div>
+  My rating:
+  <div class="my-rating" style="display: inline">
+    {% for idx in range(1, 10) %}{% if my_rating.content and my_rating.content > idx %}<span class="is-starred" data-star="{{ idx }}">🟊</span>{% else %}<span class="is-not-starred" data-star="{{ idx }}">🟊</span>{% endif %}{% endfor %}
+  </div>. {% if my_rating.content %}<button type="button" id="remove-rating" class="btn btn-link btn-sm">Remove my rating</button>{% endif %}
+</div>
+
+<hr>
 
 <h3><small><small><span class="oi oi-comment-square" title="Comments" aria-hidden="true"></span></small></small> Comments</h3>
 {% for comment in comments %}
-{% if not comment.hidden %}
-<div class="card" data="{{ comment.commentId }}">
+<div class="card" data-comment-id="{{ comment.commentId }}">
   <div class="card-body">
     <div class="row">
       <div class="col-2">
         <img class="img-fluid rounded float-right" src="https://www.gravatar.com/avatar/{{ comment.user.email | md5 }}?d=monsterid" />
       </div>
-      <div class="col-10">
-        <h6><small><a href="#comment-{{ comment.commentId }}" id="#comment-{{ comment.commentId }}"><span class="oi oi-link-intact" title="Anchor" aria-hidden="true"></span></a></small> <strong>@{{ comment.user.userName }}</strong> ({{ comment.user.firstName }} {{comment.user.lastName }}) <small>wrote at {{ comment.createdAt }} {% if comment.updatedAt %}(last edited at {{ comment.updatedAt }}){% endif %}</small></h6>
-        <p>{{ comment.content }}</p>
-        <a href="#" class="card-link" data="{{ comment.commentId }}">Cite</a>
+      <div class="col-10 comments">
+        <h6><small><a href="#comment-{{ comment.commentId }}" id="comment-{{ comment.commentId }}"><span class="oi oi-link-intact" title="Anchor" aria-hidden="true"></span></a></small> <strong>@{{ comment.user.userName }}</strong> ({{ comment.user.firstName }} {{comment.user.lastName }}) <small>wrote at {{ comment.createdAt }} {% if comment.updatedAt %}(last edited at {{ comment.updatedAt }}){% endif %}</small></h6>
+        <p data-comment-id="{{ comment.commentId }}">{{ comment.content }}</p>
+        {% if current_user.userId %}
+        <a href="#" class="card-link cite-comment" data-comment-id="{{ comment.commentId }}">Cite</a>
         {% if comment.authorId == current_user.userId %}
-        <a href="#" class="card-link" data="{{ comment.commentId }}">Edit</a>
+        <a href="#" class="card-link edit-comment" data-comment-id="{{ comment.commentId }}">Edit</a>
+        <a href="#" class="card-link delete-comment" data-comment-id="{{ comment.commentId }}">Delete</a>
+        {% endif %}
         {% endif %}
       </div>
     </div>
   </div>
 </div>
-{% endif %}
 {% endfor %}
+{% if current_user.userId %}
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2">
+        <img class="img-fluid rounded float-right" src="https://www.gravatar.com/avatar/{{ current_user.email | md5 }}?d=monsterid" />
+      </div>
+      <div class="col-10">
+        <h6>What's your thought? <small>Write it down!</small></h6>
+        <p>
+          <textarea class="form-control" id="new-comment" rows="3" data-post-id="{{ post.postId }}"></textarea>
+        </p>
+        <a href="#" class="card-link" id="submit-new-comment">Submit</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div class="modal fade" id="EditCommentModal" tabindex="-1" role="dialog" aria-labelledby="EditCommentModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EditCommentModalTitle">Edit Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea class="form-control" id="CommentEditor" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="submit-updated-comment" data-comment-id="">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

@@ -37,7 +37,4 @@ class LoginForm(FlaskForm):
         user = Users.query.filter_by(email=email.data).first()
         if not user:
             flash('User not exist or password wrong.')
-        
-class CommentForm(FlaskForm):
-    comment = StringField('Comment', validators=[InputRequired()])
-    submit = SubmitField('Post comment')
+

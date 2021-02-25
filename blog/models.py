@@ -5,7 +5,6 @@ from blog import db, login_manager
 
 class Posts(db.Model):
     postId = db.Column(db.Integer, primary_key=True)
-    categoryId = db.Column(db.Integer, db.ForeignKey('categories.categoryId'), nullable = False, )
     url = db.Column(db.String(40), nullable = False, unique=True)
     title = db.Column(db.Text, nullable = False)
     content = db.Column(db.Text, nullable = False)
@@ -13,10 +12,11 @@ class Posts(db.Model):
     createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
     hidden = db.Column(db.Integer, nullable=False, default=0)
-    listed = db.Column(db.Integer, nullable=False, default=0)
+    listed = db.Column(db.Integer, nullable=False, default=1)
     pinned = db.Column(db.Integer, nullable=False, default=0)
     comments = db.relationship('Comments', backref='post', lazy=True)
     ratings = db.relationship('Ratings', backref='post', lazy=True)
+    taggings = db.relationship('Taggings', backref='post', lazy=True)
 
     def __repr__(self):
         return f"Post('{self.createdAt}', '{self.url}', '{self.title}')"
@@ -30,6 +30,7 @@ class Users(UserMixin, db.Model):
     passwordHash = db.Column(db.String(128), nullable=False)
     comment = db.relationship('Comments', backref='user', lazy=True)
     ratings = db.relationship('Ratings', backref='user', lazy=True)
+    taggings = db.relationship('Taggings', backref='user', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
@@ -52,12 +53,6 @@ class Users(UserMixin, db.Model):
     def load_user(user_id):
         return Users.query.get(int(user_id))
 
-class Categories(db.Model):
-    categoryId = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Text, nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    post = db.relationship('Posts', backref='post', lazy=True)
-
 class Comments(db.Model):
     commentId = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
@@ -65,7 +60,6 @@ class Comments(db.Model):
     authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
     createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updatedAt = db.Column(db.DateTime, nullable=True)
-    hidden = db.Column(db.Integer, nullable=False, default=0)
 
     def __repr__(self):
         return f"Comment('{self.createdAt}', '{self.authorId}', '{self.content}')"
@@ -75,9 +69,10 @@ class Ratings(db.Model):
     content = db.Column(db.Integer, nullable=False)
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
     authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
-    createdAt = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
-    updatedAt = db.Column(db.DateTime, nullable=True)
-    hidden = db.Column(db.Integer, nullable=False, default=0)
+    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f"Rating('{self.createdAt}', '{self.authorId}', '{self.content}')"
+class Taggings(db.Model):
+    taggingId = db.Column(db.Integer, primary_key=True)
+    postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
+    authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
+    createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

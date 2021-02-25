@@ -10,7 +10,7 @@
           {% if post[0].pinned %}<small><span class="oi oi-pin text-danger" title="Pinned" aria-hidden="true"></span> </small>{% endif %}{{ post[0].title | truncate(20, True, '...')}}
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ post[0].createdAt }}</h6>
-        <p class="card-text text-muted">{{ post[0].content | truncate(100, False, '...')}}</p>
+        <p class="card-text text-muted">{{ post[0].content | striptags | truncate(100, False, '...')}}</p>
         <p class="card-text"><small class="text-muted">{% if post.avg_rating %}{{ "%.1f" | format(post.avg_rating) }}{% else %}-{% endif %}/10, {{ post[0].comments | length }} comment(s)</small></p>
       </div>
     </div>

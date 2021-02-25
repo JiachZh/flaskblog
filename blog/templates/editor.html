@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Post editor <small>(editing <a class="post_url"></a></span>)</small></h2>
+<form id="form" class="form" method="POST" action="">
+  <div class="form-group row">
+    <label for="PostId" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="PostId" value="{% if post %}{{ post.postId }}{% else %}To be allocated{% endif %}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="URL" class="col-sm-2 col-form-label">URL</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext post_url" id="URL" value="">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="Title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="Title" name="Title" value="{{ post.title }}" placeholder="Title">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="Image" class="col-sm-2 col-form-label">Image</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="Image" name="Image" value="{{ post.image }}" placeholder="Image URL">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="Content" class="col-sm-2 col-form-label">Content</label>
+    <div class="col-sm-10">
+      <textarea id="Content" name="Content">{{ post.content }}</textarea>
+    </div>
+  </div>
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Listed</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="Listed" id="Listed-0" value="0"{% if not post.listed %} checked{% endif %}>
+          <label class="form-check-label" for="Listed-0">
+            This post is not listed and is only accessible by admin
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="Listed" id="Listed-1" value="1"{% if post.listed %} checked{% endif %}>
+          <label class="form-check-label" for="Listed-1">
+            This post is published
+          </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Pinned</legend>
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="Pinned" id="Pinned-0" value="0"{% if not post.pinned %} checked{% endif %}>
+          <label class="form-check-label" for="Pinned-0">
+            This post is not pinned
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="Pinned" id="Pinned-1" value="1"{% if post.pinned %} checked{% endif %}>
+          <label class="form-check-label" for="Pinned-1">
+            This post is pinned and will be priorly shown on home page
+          </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <input type="hidden" id="Hidden" name="Hidden" value="0">
+  <div class="form-group row">
+    <div class="col-sm-10 offset-sm-2">
+      <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+      <button type="button" class="btn btn-lg btn-danger">Delete</button>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}

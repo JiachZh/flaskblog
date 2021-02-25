@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jcable</title>
+    <title>{% if title %}{{ title }} | {% endif %}Jcable</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -18,6 +18,11 @@
       rel="stylesheet"
       type="text/css"
       href="{{ url_for('static', filename='open-iconic/css/open-iconic-bootstrap.css') }}"
+      />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='summernote/summernote-bs4.min.css') }}"
       />
     <link
       rel="stylesheet"
@@ -122,6 +127,7 @@
       <script src="{{ url_for('static', filename='jquery-3.2.1.slim.min.js') }}"></script>
       <script src="{{ url_for('static', filename='bricklayer/bricklayer.min.js') }}"></script>
       <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.js') }}"></script>
+      <script src="{{ url_for('static', filename='summernote/summernote-bs4.min.js') }}"></script>
       <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>
