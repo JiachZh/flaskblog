@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Blog posts you tagged</h2>
+
+<table class="table">
+  <tbody>
+    {% for tagging in taggings %}
+    {% if tagging.post.listed == 1 %}
+    <tr>
+      <td>
+        <em><a href="{{ '/post/' + tagging.post.url }}">{{ tagging.post.title }}</a></em>
+      </td>
+      <td class="created-at">
+        Tagged at {{ tagging.createdAt }}
+      </td>
+      <td>
+        <button type="button" class="untag-post btn btn-danger" data-post-id="{{ tagging.post.postId }}">Untag</button>
+      </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

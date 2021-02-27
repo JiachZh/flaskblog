@@ -6,7 +6,7 @@ body {
 }
 
 body {
-    padding: 0 0 55px 0;
+    padding: 56px 0 75px 0;
 }
 
 #banner {
@@ -45,12 +45,13 @@ h2 {
 #footer {
     background-color: #716040;
     color: #fffffe;
-    position: fixed;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    padding-top: 15px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer>p {
+    margin: 0.5rem;
 }
 
 .bricklayer-column-sizer {
@@ -90,4 +91,8 @@ html {
 .is-not-starred {
     color: rgb(170, 170, 170);
     cursor: pointer;
+}
+
+.search-matched {
+    color: red;
 }

@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+import flask_sqlalchemy
 from flask_login import LoginManager
 
 app = Flask(__name__, static_folder='static') 
@@ -12,6 +12,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mysun:3.1415926@sql.mak
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-db = SQLAlchemy(app)
+db = flask_sqlalchemy.SQLAlchemy(app)
 
 from blog import routes, filters, context_processors

@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_login import UserMixin
-from blog import db, login_manager
+from blog import app, db, login_manager
 
 class Posts(db.Model):
     postId = db.Column(db.Integer, primary_key=True)
@@ -76,3 +76,4 @@ class Taggings(db.Model):
     postId = db.Column(db.Integer, db.ForeignKey('posts.postId'), nullable=False)
     authorId = db.Column(db.Integer, db.ForeignKey('users.userId'), nullable=False)
     createdAt = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+

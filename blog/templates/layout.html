@@ -32,7 +32,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-md navbar-light" id="navcontainer">
+    <nav class="navbar navbar-expand-md navbar-light fixed-top" id="navcontainer">
       <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-collapse" aria-controls="nav-collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -67,7 +67,7 @@
         </div>
     </nav>
 
-    <img id="banner" class="img-fluid" src="{{ url_for('static', filename='img/headerbanner.png') }}" alt="Jcable banner" />
+    <a href="{{ url_for('home') }}"><img id="banner" class="img-fluid" src="{{ url_for('static', filename='img/headerbanner.png') }}" alt="Jcable banner" /></a>
     <hr>
     <div class="container" id="content">
       <div>
@@ -89,11 +89,11 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Search</h5>
-              <form>
+              <form action="/search">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" placeholder="Search posts by keywords" aria-label="Search posts by keywords" aria-describedby="basic-addon2">
+                  <input type="text" class="form-control" name="keywords" placeholder="Search posts by keywords" aria-label="Search posts by keywords" aria-describedby="basic-addon2">
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"><span class="oi oi-zoom-in" title="Search" aria-hidden="true"></span></button>
+                    <button class="btn btn-outline-secondary" type="submit"><span class="oi oi-zoom-in" title="Search" aria-hidden="true"></span></button>
                   </div>
                 </div>
               </form>
@@ -110,7 +110,7 @@
           </div>
         </div>
       </div>
-      <div id="footer">
+      <div id="footer" class="fixed-bottom">
         <p>
           <span class="oi oi-audio-spectrum" title="Follow me" aria-hidden="true"></span> Keep connected:
           <a href="https://www.linkedin.com">

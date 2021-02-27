@@ -20,7 +20,11 @@
     {% for idx in range(1, 10) %}{% if my_rating.content and my_rating.content > idx %}<span class="is-starred" data-star="{{ idx }}">🟊</span>{% else %}<span class="is-not-starred" data-star="{{ idx }}">🟊</span>{% endif %}{% endfor %}
   </div>. {% if my_rating.content %}<button type="button" id="remove-rating" class="btn btn-link btn-sm">Remove my rating</button>{% endif %}
 </div>
-
+{% if not tagged %}
+<button type="button" id="tag-post" class="btn btn-success">Tag this post&nbsp;&nbsp;<small><span class="oi oi-bookmark" title="bookmark" aria-hidden="true"></span></small></button>
+{% else %}
+<button type="button" id="untag-post" class="btn btn-danger">Untag this post&nbsp;&nbsp;<small><span class="oi oi-icon-bookmark" title="bookmark" aria-hidden="true"></span></small></button>
+{% endif %}
 <hr>
 
 <h3><small><small><span class="oi oi-comment-square" title="Comments" aria-hidden="true"></span></small></small> Comments</h3>

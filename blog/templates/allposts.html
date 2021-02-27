@@ -3,18 +3,18 @@
 <h2>All blog posts</h2>
 
 <p>
-  <button type="button" class="btn btn-outline-secondary">Newest first</button>
-  <button type="button" class="btn btn-outline-secondary">Oldest first</button>
+  <button id="sort-newest-first" type="button" class="btn btn-secondary">Newest first</button>
+  <button id="sort-oldest-first" type="button" class="btn btn-outline-secondary">Oldest first</button>
 </p>
 
-<table class="table">
+<table class="table" id="all-posts">
   <tbody>
     {% for post in posts %}
     <tr>
       <td>
         <em><a href="{{ '/post/' + post[0].url }}">{{ post[0].title }}</a></em>
       </td>
-      <td>
+      <td class="created-at">
         {{ post[0].createdAt }}
       </td>
       <td>

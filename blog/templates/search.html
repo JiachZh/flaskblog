@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Searching for '<span class="search-keywords">{{ keywords }}</span>'</h2>
+<div class="search-result invisible">
+  {% for post in posts %}
+  <div class="search-post">
+    <a href="{{ '/post/' + post.url }}">
+      <h3>{{ post.title }}</h3>
+    </a>
+    <p>{{ post.content | striptags }}</p>
+    <hr>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

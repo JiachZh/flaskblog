@@ -9,7 +9,7 @@ from datetime import datetime
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Posts.query.add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).limit(12).all()
+    posts = Posts.query.filter_by(listed=1).order_by(Posts.pinned.desc(), Posts.createdAt.desc()).add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).limit(12).all()
     return render_template('home.html', title='Home', posts=posts)
 
 @app.route('/about')
@@ -18,8 +18,15 @@ def about():
 
 @app.route('/allposts', methods=['GET'])
 def allposts():
-    posts = Posts.query.filter_by(listed=1).add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).all()
+    posts = Posts.query.filter_by(listed=1).order_by(Posts.createdAt.desc()).add_column(func.avg(Ratings.content).label('avg_rating')).join(Ratings, Ratings.postId==Posts.postId, isouter=True).group_by(Posts.postId).all()
     return render_template('allposts.html', title='All posts', posts=posts)
+
+@app.route('/search')
+def search():
+    # TODO: Clumsy implementation of search engine, needs to be improved
+    posts = Posts.query.filter_by(listed=1).all()
+    print(request.args.get('keywords'))
+    return render_template('search.html', title='Search results', posts=posts, keywords=request.args.get('keywords'))
 
 @app.route('/post/<string:post_url>')
 def post(post_url):
@@ -29,7 +36,8 @@ def post(post_url):
     comments = Comments.query.filter_by(postId=post.postId)
     rating = Ratings.query.filter_by(postId=post.postId).with_entities(func.avg(Ratings.content).label('average')).first()
     my_rating = Ratings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
-    return render_template('post.html', title=post.title, post=post, comments=comments, rating=rating, my_rating=my_rating)
+    tagged = Taggings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
+    return render_template('post.html', title=post.title, post=post, comments=comments, rating=rating, my_rating=my_rating, tagged=tagged)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -58,7 +66,8 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('about.html', title='About Us')
+    taggings = Taggings.query.order_by(Taggings.createdAt.desc()).all()
+    return render_template('profile.html', title='Tagged posts', taggings=taggings)
 
 @app.route('/logout')
 @login_required
@@ -106,7 +115,7 @@ def comment():
         comment = Comments(content=request.form.get('Content'), postId=request.form.get('PostId'), authorId=current_user.get_id())
         db.session.add(comment)
     else:
-        comment = Comments.query.filter_by(commentId=commentId).first()
+        comment = Comments.query.filter_by(authorId=current_user.userId, commentId=commentId).first()
         if request.form.get('Delete'):
             db.session.delete(comment)
         else:
@@ -134,9 +143,9 @@ def rating():
 @app.route('/tagging', methods=['POST'])
 @login_required
 def tagging():
-    tagging = Ratings.query.filter_by(authorId=current_user.get_id(), postId=request.form.get('PostId')).first()
+    tagging = Taggings.query.filter_by(authorId=current_user.get_id(), postId=request.form.get('PostId')).first()
     if tagging is None:
-        rating = Taggings(postId=request.form.get('PostId'), authorId=current_user.get_id())
+        tagging = Taggings(postId=request.form.get('PostId'), authorId=current_user.get_id())
         db.session.add(tagging)
     else:
         if request.form.get('Delete'):
