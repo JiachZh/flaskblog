@@ -17,7 +17,7 @@
 <div>
   My rating:
   <div class="my-rating" style="display: inline">
-    {% for idx in range(1, 10) %}{% if my_rating.content and my_rating.content > idx %}<span class="is-starred" data-star="{{ idx }}">🟊</span>{% else %}<span class="is-not-starred" data-star="{{ idx }}">🟊</span>{% endif %}{% endfor %}
+    {% for idx in range(1, 10) %}{% if my_rating.content and my_rating.content > idx %}<span class="is-starred" data-star="{{ idx }}">★</span>{% else %}<span class="is-not-starred" data-star="{{ idx }}">★</span>{% endif %}{% endfor %}
   </div>. {% if my_rating.content %}<button type="button" id="remove-rating" class="btn btn-link btn-sm">Remove my rating</button>{% endif %}
 </div>
 {% if not tagged %}
