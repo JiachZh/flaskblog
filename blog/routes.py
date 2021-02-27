@@ -35,8 +35,12 @@ def post(post_url):
         abort(404)
     comments = Comments.query.filter_by(postId=post.postId)
     rating = Ratings.query.filter_by(postId=post.postId).with_entities(func.avg(Ratings.content).label('average')).first()
-    my_rating = Ratings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
-    tagged = Taggings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
+    if current_user.is_authenticated:
+        my_rating = Ratings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
+        tagged = Taggings.query.filter_by(postId=post.postId, authorId=current_user.userId).first()
+    else:
+        my_rating = None
+        tagged = None
     return render_template('post.html', title=post.title, post=post, comments=comments, rating=rating, my_rating=my_rating, tagged=tagged)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,6 +83,9 @@ def logout():
 @app.route('/edit/<string:post_url>', methods=['GET', 'POST'])
 @login_required
 def edit(post_url):
+    if current_user.userName != 'admin':
+        abort(401)
+        pass
     post = Posts.query.filter_by(url=post_url).first()
     if request.method == 'GET':
         return render_template('editor.html', title='editor', post=post)

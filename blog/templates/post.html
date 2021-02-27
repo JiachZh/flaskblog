@@ -67,6 +67,12 @@
     </div>
   </div>
 </div>
+{% else %}
+<div class="card">
+  <div class="card-body">
+    <p>Please <a href="{{ url_for('login') }}">log in</a> to leave comments</p>
+  </div>
+</div>
 {% endif %}
 <div class="modal fade" id="EditCommentModal" tabindex="-1" role="dialog" aria-labelledby="EditCommentModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
