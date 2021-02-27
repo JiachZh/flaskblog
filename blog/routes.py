@@ -70,7 +70,7 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    taggings = Taggings.query.order_by(Taggings.createdAt.desc()).all()
+    taggings = Taggings.query.filter_by(suthorID=current_user.userID).order_by(Taggings.createdAt.desc()).all()
     return render_template('profile.html', title='Tagged posts', taggings=taggings)
 
 @app.route('/logout')
